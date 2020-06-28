@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/bootstrap-theme.min.css') }}">
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/bootstrap.min.css') }}">
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/fontAwesome.css') }}">
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/hero-slider.css') }}">
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/lightbox.css') }}">
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/own-carousal.css') }}">
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/templatemo-style.css') }}">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+<style>
+    .container-login100 {
+        width: 100%;
+        min-height: 100vh;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        ;
+    }
+    
+    .wrap-login100 {
+        width: 380px;
+        background: #fff;
+        border-radius: 10px;
+        position: relative;
+    }
+
+
+</style>
+<script type="text/javascript">
+  
+  $(function() {
+  $('.selectpicker').selectpicker();
+});
+</script>
+
+
+<body style="background-image: url('/static/images/bg-01.jpg');background-repeat: no-repeat;background-size: cover;">
+
+<div class="container container-login100">
+
+        <div id ="Mainbox" class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+            <div class="row">
+                <div class="col">
+
+
+{%if not err %}
+<form action="/home" method="GET" style="padding:10px">
+     <button  type="submit" value="Back" class="btn btn-danger">Back</button>
+
+  </form>
+    <form id="myForm" action="/home/option/lreg" method="POST" style="text-align:center;padding-top: 30px;padding-bottom:30px;">
+<h2>Regression</h2>
+  <label for="nattr">Enter no of input attribute</label>  
+  {% if n %}
+  <input type="text" id="nattr" name="nattr" value={{n}}>
+
+  {% else %}
+  <input type="text" id="nattr" name="nattr">  
+
+  {% endif %}
+  <br><br>
+
+  <label for="deg">Degree of polynomial to fit</label> 
+  {% if deg %}
+  <input type="text" id="deg" name="deg" value={{deg}}>
+
+  {% else %}
+  <input type="text" id="deg" name="deg">  
+  {% endif %}
+
+  
+
+<br><br>
+<button id="Submit" type="button" value="Submit" onclick="myFunction();" class="btn btn-primary">Submit</button>
+
+
+ {% if n %}
+ {%for i in range(n)%}
+ {% set no="mySelect"+(i+1)|string%}
+ {% set la="Input Column"+(i+1)|string%}
+ {% set in="inpcol"+(i+1)|string%}
+ {% set ila="Enter Column"+(i+1)|string+" Value" %} 
+ <div class = "row" style="text-align:center;padding:15px"> 
+  <label class="col-4" for="{{no}}">{{la}}</label>&nbsp&nbsp&nbsp
+  <select class="selectpicker show-tick col-6" data-live-search="true" data-style="btn-info" id="{{no}}" name="{{no}}">
+    {% for column in columns %}
+        {% if col[i]==column %}
+          <option data-tokens="{{column}}" value="{{column}}" selected="selected">{{column}}</option>
+        {% else %}
+          <option data-tokens="{{column}}" value="{{column}}" >{{column}}</option>
+        {% endif %}  
+    {% endfor %}    
+  </select>
+</div>
+  <br><br>
+  <label for="{{ila}}">{{ila}}</label>&nbsp&nbsp&nbsp
+  <input type="text" id="{{in}}" name="{{in}}" value="{{val[i]}}">  
+  <br><br><br>
+  {% endfor %}
+
+   
+  <div class = "row" style="text-align:center;padding:15px"> 
+ <label class="col-4" for="Output Column">Output Column</label>&nbsp&nbsp&nbsp
+  <select class="selectpicker show-tick col-6" data-live-search="true" data-style="btn-info" id="out" name="out">
+    {% for column in columns %}
+        {% if outcol==column %}
+          <option data-tokens="{{column}}" value="{{column}}" selected="selected">{{column}}</option>
+        {% else %}
+          <option data-tokens="{{column}}" value="{{column}}">{{column}}</option>
+        {% endif %}
+    {% endfor %}    
+  </select>
+</div>
+
+  <br><br>
+  <button type="submit" name="Predict" value="Predict" class="btn btn-primary">Predict</button>
+  <br><br>
+
+  <label for="Predicted Value for Output Column">Predicted Value for Output Column</label>&nbsp&nbsp&nbsp
+  {%if predout %}
+  <input type="text" id="pText" name="pText" value={{predout}} readonly>
+  {%else%}
+  <input type="text" id="pText" name="pText" value={{predout}} readonly>
+  {%endif%}
+
+  <br><br>
+
+  <label for="error">Error(rmse)</label>&nbsp&nbsp&nbsp
+  {%if rmse %}
+  <input type="text" id="error" name="error" value={{rmse}} readonly>
+  {%else%}
+  <input type="text" id="error" name="error" readonly>
+  {%endif%}
+
+</form>
+
+{%if graphs%}
+<form action="/graphs?url={{graphs}}" method="POST" target="_blank" style="text-align:center;padding:15px">
+  <button type="submit" name="graphs" value="graphs" class="btn btn-primary">Show Graphs</button>
+</form>  
+{%endif%}
+
+
+{% endif %}
+
+{% else %}
+<form action="/home" method="GET">
+<div class="alert alert-danger" role="alert">
+  <h4 class="alert-heading">Error</h4>
+  <hr>
+   <label class="mb-0" for="err">Some Error happened,maybe not enough data</label><br><br>
+   <button  type="submit" value="Back to home" class="btn btn-danger">Back to Home</button>
+</div>
+  </form>
+
+{% endif %}
+  </div>
+  
+</div>
+
+
+
+</div>
+</div>
+<script>
+function myFunction() {
+  var myParent = document.body;
+  var middlebox = document.getElementById("Mainbox")
+  var n =document.getElementById("nattr").value;
+  var deg = document.getElementById("deg").value;
+  var check = document.getElementById("myForm");
+  var form;
+
+  if(check)
+    check.remove();
+
+  form=document.createElement("FORM")
+  form.setAttribute("id", "myForm");
+  form.setAttribute("method", "POST");
+  form.setAttribute("action", "/home/option/lreg");
+  form.setAttribute ("style","text-align:center;padding:25px");
+
+  middlebox.appendChild(form);  
+
+  var lnattr = document.createElement("LABEL")
+  var r = document.createTextNode("Enter no of input attribute");
+  lnattr.setAttribute("for","Enter no of input attribute");
+  lnattr.setAttribute("style","padding:5px")
+  lnattr.appendChild(r);
+
+  form.appendChild(lnattr);
+
+
+  var nattr = document.createElement("INPUT")
+  nattr.setAttribute("type","text");
+  nattr.setAttribute("id","nattr");
+  nattr.setAttribute("name","nattr");
+  nattr.setAttribute("value",n); 
+
+  form.appendChild(nattr)
+
+  form.appendChild(document.createElement("br"));
+  form.appendChild(document.createElement("br"));
+
+
+  lnattr = document.createElement("LABEL")
+  r = document.createTextNode("Degree of polynomial to fit");
+  lnattr.setAttribute("for","Degree of polynomial to fit");
+  lnattr.setAttribute("style","padding:5px")
+  lnattr.appendChild(r);
+
+  form.appendChild(lnattr);
+
+
+  var deginp = document.createElement("INPUT")
+  deginp.setAttribute("type","text");
+  deginp.setAttribute("id","deg");
+  deginp.setAttribute("name","deg");
+  deginp.setAttribute("value",deg);
+
+  form.appendChild(deginp);
+
+  form.appendChild(document.createElement("br"));
+  form.appendChild(document.createElement("br"));
+
+
+  var sub = document.createElement("BUTTON");
+  sub.setAttribute("id","Submit");
+  sub.setAttribute("type","submit");
+  sub.innerHTML = "Submit";
+  sub.setAttribute("value","Submit");
+  sub.setAttribute("onclick","myFunction();");
+  sub.setAttribute("class","btn btn-primary")
+  form.appendChild(sub);
+
+  form.appendChild(document.createElement("br"));
+  form.appendChild(document.createElement("br"));
+
+
+//Create and append select list
+for(var i=1;i<=n;i++){
+  var selectdiv = document.createElement("div");
+selectdiv.setAttribute("class","row");
+selectdiv.setAttribute("style","padding:10px;text-align:center;");
+  var selectList = document.createElement("SELECT");  
+  selectList.setAttribute("id", "mySelect"+String(i));
+  selectList.setAttribute("name", "mySelect"+String(i));
+  selectList.setAttribute("class","selectpicker show-tick col-6");
+  selectList.setAttribute("data-live-search","true");
+  selectList.setAttribute("data-style","btn-info");
+  var lab = document.createElement("LABEL");
+  var t = document.createTextNode("Input Column"+String(i));
+  lab.setAttribute("for","Input Column"+String(i));
+  lab.setAttribute("class","col-4");
+  lab.appendChild(t);
+
+  selectdiv.appendChild(lab);  
+  selectdiv.appendChild( document.createTextNode( '\u00A0\u00A0\u00A0\u00A0' ) );
+  selectdiv.appendChild(selectList);  
+  form.appendChild(selectdiv);
+  var z;
+  
+
+  {% for column in columns %}
+    z = document.createElement("option");
+    z.setAttribute("data-tokens","{{column}}");
+    z.value=z.text="{{column}}";
+    selectList.appendChild(z);
+  {% endfor %} 
+
+  form.appendChild(document.createElement("br"));
+  form.appendChild(document.createElement("br"));
+
+  lab = document.createElement("LABEL");
+  t = document.createTextNode("Enter Column"+String(i)+" Value");
+  lab.setAttribute("for","Enter Column"+String(i)+" Value");
+  lab.appendChild(t);
+  form.appendChild(lab);
+
+  form.appendChild( document.createTextNode( '\u00A0\u00A0\u00A0\u00A0' ) );
+
+  var text=document.createElement('INPUT');
+  text.setAttribute("type","text");
+  text.setAttribute("id","inpcol"+String(i));
+  text.setAttribute("name","inpcol"+String(i));
+
+  form.appendChild(text);
+
+  form.appendChild(document.createElement("br"));
+  form.appendChild(document.createElement("br"));
+  form.appendChild(document.createElement("br"));
+  
+}
+
+
+ var selectdiv = document.createElement("div");
+selectdiv.setAttribute("class","row");
+selectdiv.setAttribute("style","padding:10px;text-align:center;");
+  selectList = document.createElement("SELECT");  
+  selectList.setAttribute("id", "out");
+  selectList.setAttribute("name", "out");
+  selectList.setAttribute("class","selectpicker show-tick col-6");
+  selectList.setAttribute("data-live-search","true");
+  selectList.setAttribute("data-style","btn-info");
+  lab = document.createElement("LABEL");
+  t = document.createTextNode("Output Column");
+  lab.setAttribute("for","Output Column");
+  lab.setAttribute("class","col-4");
+  lab.appendChild(t);
+
+  selectdiv.appendChild(lab);  
+  selectdiv.appendChild( document.createTextNode( '\u00A0\u00A0\u00A0\u00A0' ) );
+  selectdiv.appendChild(selectList);  
+form.appendChild(selectdiv);
+  {% for column in columns %}
+    z = document.createElement("option");
+    z.setAttribute("data-tokens","{{column}}");
+    z.value=z.text="{{column}}";
+    selectList.appendChild(z);
+  {% endfor %} 
+
+  form.appendChild(document.createElement("br"));
+  form.appendChild(document.createElement("br"));
+
+  var pred = document.createElement("BUTTON");
+  pred.setAttribute("type","submit");
+  pred.setAttribute("value","Predict");
+  pred.setAttribute("name","Predict");
+  pred.innerHTML ="Predict"
+  pred.setAttribute("class","btn btn-primary")
+
+  form.appendChild(pred);
+
+  form.appendChild(document.createElement("br"));
+  form.appendChild(document.createElement("br"));
+
+  lab = document.createElement("LABEL");
+  t = document.createTextNode("Predicted Value for Output Column");
+  lab.setAttribute("for","Predicted Value for Output Column");
+  lab.appendChild(t);
+
+  form.appendChild(lab); 
+  form.appendChild( document.createTextNode( '\u00A0\u00A0\u00A0\u00A0' ) );
+
+
+  var pText=document.createElement("INPUT");
+  pText.setAttribute("id","pText");
+  pText.setAttribute("type","text");
+  pText.readOnly=true;
+  form.appendChild(pText);
+
+
+
+
+  form.appendChild(document.createElement("br"));
+  form.appendChild(document.createElement("br"));
+
+  lab = document.createElement("LABEL");
+  t = document.createTextNode("Error(rmse)");
+  lab.setAttribute("for","error");
+  lab.appendChild(t);
+
+  form.appendChild(lab); 
+  form.appendChild( document.createTextNode( '\u00A0\u00A0\u00A0\u00A0' ) );
+
+
+  pText=document.createElement("INPUT");
+  pText.setAttribute("id","error");
+  pText.setAttribute("type","text");
+  pText.readOnly=true;
+  form.appendChild(pText);
+$(".selectpicker").selectpicker('refresh');
+
+
+}
+
+
+
+</script>
+
+</body>
+</html>
