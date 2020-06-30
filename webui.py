@@ -70,8 +70,6 @@ def linearReg(n,xCol,yCol,inpFeat,deg):
 		plt.scatter(X_test, y_test,  color='blue')
 		# plt.plot(X_test, y_pred, color='red', linewidth=1)
 		# plt.title("Actual vs Prediction")
-		# plt.xlabel(xCol[0])  
-		# plt.ylabel(yCol) 
 		# t=time.time()
 		# purge('static/images/',"regression*")
 		# path="static/images/regression"+str(t)+".png"
@@ -84,6 +82,8 @@ def linearReg(n,xCol,yCol,inpFeat,deg):
 		sorted_zip = sorted(zip(X_test,y_pred), key=sort_axis)
 		X_test, y_pred = zip(*sorted_zip)
 		plt.plot(X_test, y_pred, color='red',linewidth=1)
+		plt.xlabel(xCol[0])  
+		plt.ylabel(yCol) 
 		plt.savefig(path)
 
 	
