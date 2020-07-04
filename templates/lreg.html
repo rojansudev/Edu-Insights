@@ -170,8 +170,10 @@
 <form action="/graphs?url={{graphs}}" method="POST" target="_blank" style="text-align:center;padding:15px">
   <button type="submit" name="graphs" value="graphs" class="btn btn-primary">Show Graphs</button>
 </form>  
-{%endif%}
 
+
+
+{%endif%}
 
 {% endif %}
 
@@ -186,6 +188,15 @@
   </form>
 
 {% endif %}
+
+<br>
+<br>
+<div class="alert alert-info" role="alert">
+  <h4 class="alert-heading">Wikipedia links</h4>
+  <hr>
+  <a href="https://en.wikipedia.org/wiki/Polynomial_regression" target="_blank"> Polynomial regression</a> 
+</div> 
+
   </div>
   
 </div>
@@ -401,6 +412,30 @@ form.appendChild(selectdiv);
   pText.setAttribute("type","text");
   pText.readOnly=true;
   form.appendChild(pText);
+
+
+  var div=document.createElement("div");
+  div.setAttribute("class","alert alert-info");
+  div.setAttribute("role","alert");
+  var head=document.createElement("h4");
+  head.setAttribute("class","alert-heading");
+  
+  text=document.createTextNode("Wikipedia links");
+  head.appendChild(text);
+
+
+  var link=document.createElement('a');
+  link.setAttribute("href","https://en.wikipedia.org/wiki/Polynomial_regression");
+  link.appendChild(document.createTextNode("Polynomial regression"));
+  link.setAttribute("target","_blank");
+  form.appendChild(document.createElement("br"));
+  form.appendChild(document.createElement("br"));
+
+  div.appendChild(head);
+  div.appendChild(document.createElement("hr"));
+  div.appendChild(link);
+  form.appendChild(div)
+
 $(".selectpicker").selectpicker('refresh');
 
 

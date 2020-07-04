@@ -10,6 +10,7 @@ from sklearn.preprocessing import PolynomialFeatures
 import time
 import os, re
 import operator
+from scipy import stats
 
 
 app = Flask(__name__)
@@ -28,12 +29,19 @@ def purge(dir, pattern):
             os.remove(os.path.join(dir, f))
 
 
-def getCorrelation(xCol,yCol):
+def getCorrelation(xCol,yCol,alpha=0.05):
 	
 	#drop missing
-	data.dropna(inplace=True,subset=[xCol,yCol])
+	df2=data.dropna(subset=[xCol,yCol])
 
-	return data[xCol].corr(method="spearman",other=data[yCol])
+	r=df2[xCol].corr(method="spearman",other=df2[yCol])
+
+	r_z = np.arctanh(r)
+	se = 1/np.sqrt(df2[xCol].shape[0]-3)
+	z = stats.norm.ppf(1-alpha/2)
+	lo_z, hi_z = r_z-z*se, r_z+z*se
+	lo, hi = np.tanh((lo_z, hi_z))
+	return r,lo, hi
 
 
 def linearReg(n,xCol,yCol,inpFeat,deg):
@@ -115,10 +123,10 @@ def process_corr():
 	if request.method == 'POST' and request.form['submit'] == 'Submit!':
 		xCol=request.form["col1"]
 		yCol=request.form["col2"]
-		corr=getCorrelation(str(xCol),str(yCol))
-		print(xCol,yCol)
+		corr,lo,hi=getCorrelation(str(xCol),str(yCol))
+		print(lo,hi)
 
-		return render_template('corr.html',corr=corr,columns=columns,sc1=xCol,sc2=yCol)
+		return render_template('corr.html',corr=corr,columns=columns,sc1=xCol,sc2=yCol,lo=lo,hi=hi)
 
 
 @app.route("/home/option/lreg", methods = ["POST"] )

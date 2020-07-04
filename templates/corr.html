@@ -81,7 +81,7 @@
 
 
 <form method="POST" action="/home/option/corr" style="text-align:center;padding-top: 30px;padding-bottom:30px;">
-  <h1>Correlation</h1>
+  <h1>Spearman's Correlation</h1><br>
   <div class = "row" style="padding:10px">
     <label class="col-4" for="col1">Column 1</label>
   <select class="selectpicker show-tick col-8" data-live-search="true" data-style="btn-info" name="col1" id="col1" >
@@ -122,10 +122,17 @@
   {% if corr %}
   
   <div class="alert alert-success" role="alert">
-  <h4 class="alert-heading">Correlation</h4>
+  <h4 class="alert-heading">Spearman's Correlation</h4>
   <hr>
   <p class="mb-0">{{corr}}</p>
 </div>
+
+  <div class="alert alert-success" role="alert">
+  <h4 class="alert-heading">95% confidence interval</h4>
+  <hr>
+  <p class="mb-0">({{lo}} , {{hi}})</p>
+  </div> 
+
   {% else %}
   <div class="alert alert-info" role="alert">
   <h4 class="alert-heading">Note</h4>
@@ -134,6 +141,12 @@
 </div>
   
   {% endif %}
+
+<div class="alert alert-info" role="alert">
+  <h4 class="alert-heading">Wikipedia links</h4>
+  <hr>
+  <a href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient" target="_blank"> Spearman's Correlation</a> 
+</div> 
 
   
   
