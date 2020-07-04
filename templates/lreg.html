@@ -191,7 +191,7 @@
 
 <br>
 <br>
-<div class="alert alert-info" role="alert">
+<div class="alert alert-info" role="alert" style="text-align:center;padding:15px">
   <h4 class="alert-heading">Wikipedia links</h4>
   <hr>
   <a href="https://en.wikipedia.org/wiki/Polynomial_regression" target="_blank"> Polynomial regression</a> 
@@ -415,6 +415,7 @@ form.appendChild(selectdiv);
 
 
   var div=document.createElement("div");
+  div.setAttribute("style","text-align:center;padding:15px")
   div.setAttribute("class","alert alert-info");
   div.setAttribute("role","alert");
   var head=document.createElement("h4");
@@ -434,7 +435,7 @@ form.appendChild(selectdiv);
   div.appendChild(head);
   div.appendChild(document.createElement("hr"));
   div.appendChild(link);
-  form.appendChild(div)
+  middlebox.appendChild(div)
 
 $(".selectpicker").selectpicker('refresh');
 
